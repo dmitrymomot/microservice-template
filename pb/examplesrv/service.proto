@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package example;
+package examplesrv;
 
 // import "google/protobuf/wrappers.proto";
 // import "google/api/annotations.proto";

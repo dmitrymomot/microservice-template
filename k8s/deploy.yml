@@ -16,7 +16,7 @@ spec:
   template:
     metadata:
       annotations:
-        linkerd.io/inject: disabled
+        linkerd.io/inject: enabled
       creationTimestamp: null
       labels:
         app: microservice-template
