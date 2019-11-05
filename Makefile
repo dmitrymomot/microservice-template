@@ -29,7 +29,7 @@ docker: ## Build docker image
 
 .PHONY: deploy
 deploy: ## Deploy pods to kubernetes
-	kubectl apply -f k8s/deploy.yml
+	kubectl apply -f k8s/config.yml -f k8s/deploy.yml
 
 .PHONY: lb
 lb: ## Run load balancer service
@@ -41,15 +41,15 @@ svc: ## Run service without external port
 
 .PHONY: down
 down: ## Down pods
-	kubectl delete -f k8s/deploy.yml
+	kubectl delete -f k8s/deploy.yml -f k8s/config.yml
 
 .PHONY: down-lb
 down-lb: ## Down load balancer
-	kubectl delete -f k8s/deploy.yml -f k8s/lb.yml
+	kubectl delete -f k8s/deploy.yml -f k8s/lb.yml -f k8s/config.yml
 
 .PHONY: down-svc
 down-svc: ## Down service wrapper
-	kubectl delete -f k8s/deploy.yml -f k8s/service.yml
+	kubectl delete -f k8s/deploy.yml -f k8s/service.yml -f k8s/config.yml
 
 .PHONY: reload
 reload: down deploy info ## Reload after app was rebuilt
