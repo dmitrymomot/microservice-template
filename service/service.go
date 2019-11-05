@@ -3,18 +3,18 @@ package service
 import (
 	"context"
 
-	microservice_template "github.com/dmitrymomot/microservice-template/proto/microservice-template"
+	"github.com/dmitrymomot/microservice-template/pb"
 )
 
 type service struct {
-	microservice_template.UnimplementedServiceServer
+	pb.UnimplementedServiceServer
 }
 
 // NewService is a factory function, returns a new instance of the service structure
-func NewService() microservice_template.ServiceServer {
+func NewService() pb.ServiceServer {
 	return &service{}
 }
 
-func (*service) Call(ctx context.Context, req *microservice_template.Req) (*microservice_template.Resp, error) {
-	return &microservice_template.Resp{Str: "Received: " + req.GetStr()}, nil
+func (*service) Call(ctx context.Context, req *pb.Req) (*pb.Resp, error) {
+	return &pb.Resp{Str: "Received: " + req.GetStr()}, nil
 }

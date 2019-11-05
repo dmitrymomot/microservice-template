@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"sync"
 
-	microservice_template "github.com/dmitrymomot/microservice-template/proto/microservice-template"
+	"github.com/dmitrymomot/microservice-template/pb"
 	"github.com/dmitrymomot/microservice-template/service"
 	"github.com/go-chi/chi"
 	"google.golang.org/grpc"
@@ -40,7 +40,7 @@ func main() {
 				log.Fatalf("failed to listen: %v", err)
 			}
 			s := grpc.NewServer()
-			microservice_template.RegisterServiceServer(s, srv)
+			pb.RegisterServiceServer(s, srv)
 			if err := s.Serve(lis); err != nil {
 				log.Fatalf("grpc server: %+v", err)
 			}
@@ -52,7 +52,7 @@ func main() {
 		go func() {
 			defer wg.Done()
 			log.Println("start twirp server")
-			handler := microservice_template.NewServiceServer(srv, nil)
+			handler := pb.NewServiceServer(srv, nil)
 
 			r := chi.NewRouter()
 			r.Get("/health", func(w http.ResponseWriter, r *http.Request) {

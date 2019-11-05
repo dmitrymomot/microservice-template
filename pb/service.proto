@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package microservice_template;
+package pb;
 
 // import "google/protobuf/wrappers.proto";
 // import "google/api/annotations.proto";
