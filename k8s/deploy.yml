@@ -8,29 +8,31 @@ spec:
   selector:
     matchLabels:
       app: microservice-template
-  strategy: {}
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 50%
+    type: RollingUpdate
   template:
     metadata:
       annotations:
-        linkerd.io/inject: enabled
+        linkerd.io/inject: disabled
       creationTimestamp: null
       labels:
         app: microservice-template
     spec:
       containers:
-        - env:
-            - name: GRPC_PORT
-              value: "8080"
+        - name: microservice-template
           image: microservice-template:latest
           imagePullPolicy: IfNotPresent
-          name: microservice-template
+          args:
+            - -grpc
+            - -twirp
           ports:
             - containerPort: 8080
-              name: grpc
-            - containerPort: 8888
               name: http
+            - containerPort: 8888
+              name: grpc
           # resources:
           #   requests:
           #     cpu: 500m
-      serviceAccountName: microservice-template
-status: {}

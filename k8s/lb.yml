@@ -7,9 +7,9 @@ spec:
   selector:
     app: microservice-template
   ports:
-    - name: http
+    - name: lb-http
       port: 8080
       targetPort: 8080
-    - name: grpc
+    - name: lb-grpc
       port: 8888
       targetPort: 8888

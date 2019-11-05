@@ -7,9 +7,9 @@ spec:
     app: microservice-template
   clusterIP: None
   ports:
-    - name: http
+    - name: srv-http
       port: 8080
       targetPort: 8080
-    - name: grpc
+    - name: srv-grpc
       port: 8888
       targetPort: 8888
