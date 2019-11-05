@@ -10,14 +10,14 @@ proto: ## Compile protobuf for golang
 		--go_out=plugins=grpc:. \
 		--twirp_out=. \
 		--validate_out=lang=go:. \
-		pb/*.proto
+		pb/**/*.proto
 
 .PHONY: proto-dart
 proto-dart: ## Compile protobuf for dart
 	protoc -I /usr/local/include -I . \
 		-I$(GOPATH)/src \
 		--dart_out=grpc:. \
-		pb/*.proto
+		pb/**/*.proto
 
 .PHONY: build
 build: proto ## Build application and compile protobuf for golang
