@@ -6,12 +6,12 @@ package microservice_template
 import (
 	context "context"
 	fmt "fmt"
+	types "github.com/dmitrymomot/microservice-template/proto/types"
 	proto "github.com/golang/protobuf/proto"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
 	math "math"
-	types "proto/types"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.

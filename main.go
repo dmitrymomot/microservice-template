@@ -7,16 +7,20 @@ import (
 	"net/http"
 	"sync"
 
-	"github.com/dmitrymomot/microservice-template/proto/microservice_template"
+	microservice_template "github.com/dmitrymomot/microservice-template/proto/microservice-template"
+	"github.com/dmitrymomot/microservice-template/service"
 	"github.com/go-chi/chi"
-	"github.com/google/uuid"
+	"google.golang.org/grpc"
 )
 
 var (
 	wg sync.WaitGroup
 
-	grpc  = flag.Bool("grpc", false, "run with grpc handler")
-	twirp = flag.Bool("twirp", false, "run with twirp handler")
+	grpcSrv  = flag.Bool("grpc", false, "run with grpc handler")
+	twirpSrv = flag.Bool("twirp", false, "run with twirp handler")
+
+	grpcPort = ":8888"
+	httpPort = ":8080"
 )
 
 func init() {
@@ -24,9 +28,9 @@ func init() {
 }
 
 func main() {
-	srv := NewService()
+	srv := service.NewService()
 
-	if *grpc {
+	if *grpcSrv {
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
@@ -36,19 +40,19 @@ func main() {
 				log.Fatalf("failed to listen: %v", err)
 			}
 			s := grpc.NewServer()
-			microservice_template.RegisterServiceServer(s, &server{id: uuid.New()})
+			microservice_template.RegisterServiceServer(s, srv)
 			if err := s.Serve(lis); err != nil {
 				log.Fatalf("grpc server: %+v", err)
 			}
 		}()
 	}
 
-	if *twirp {
+	if *twirpSrv {
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
 			log.Println("start twirp server")
-			handler := microservice_template.NewServiceServer(&server{}, nil)
+			handler := microservice_template.NewServiceServer(srv, nil)
 
 			r := chi.NewRouter()
 			r.Get("/health", func(w http.ResponseWriter, r *http.Request) {

@@ -34,3 +34,7 @@ lb:
 .PHONY: down
 down:
 	kubectl delete -f k8s/deploy.yml -f k8s/lb.yml -f k8s/service.yml
+
+.PHONY: info
+info:
+	@kubectl get all
