@@ -23,17 +23,32 @@ build: proto
 docker:
 	docker build . -t microservice-template:latest
 
-.PHONY: up
-up:
-	kubectl apply -f k8s/deploy.yml -f k8s/service.yml
+.PHONY: deploy
+deploy:
+	kubectl apply -f k8s/deploy.yml
 
 .PHONY: lb
 lb:
-	kubectl apply -f k8s/deploy.yml -f k8s/lb.yml
+	kubectl apply -f k8s/lb.yml
+
+.PHONY: svc
+svc:
+	kubectl apply -f k8s/service.yml
 
 .PHONY: down
 down:
-	kubectl delete -f k8s/deploy.yml -f k8s/lb.yml -f k8s/service.yml
+	kubectl delete -f k8s/deploy.yml
+
+.PHONY: down-lb
+down-lb:
+	kubectl delete -f k8s/deploy.yml -f k8s/lb.yml
+
+.PHONY: down-svc
+down-svc:
+	kubectl delete -f k8s/deploy.yml -f k8s/service.yml
+
+.PHONY: reload
+reload: down deploy info
 
 .PHONY: info
 info:

@@ -4,9 +4,21 @@ package microservice_template;
 
 // import "google/protobuf/wrappers.proto";
 // import "google/api/annotations.proto";
-// import "google/protobuf/any.proto";
 // import "validate/validate.proto";
-import "proto/types/error.proto";
+import "google/protobuf/any.proto";
+
+message Error {
+    int32 code = 1;
+    string message = 2;
+    google.protobuf.Any details = 4;
+	map<string, ValidationError> validation = 5;
+}
+
+message ValidationError {
+    repeated string errors = 1;
+}
+
+
 
 service Service {
 	rpc Call (Req) returns (Resp) {}
@@ -18,5 +30,5 @@ message Req {
 
 message Resp {
 	string str = 1;
-    types.Error error = 2;
+    Error error = 2;
 }
