@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package types;
+
+import "google/protobuf/any.proto";
+
+message Error {
+    int32 code = 1;
+    string message = 2;
+    google.protobuf.Any details = 4;
+	map<string, ValidationError> validation = 5;
+}
+
+message ValidationError {
+    repeated string errors = 1;
+}
